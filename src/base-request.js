@@ -8,6 +8,7 @@ var Request = function(builder) {
   this.host = builder.host;
   this.port = builder.port;
   this.scheme = builder.scheme;
+  this.basePath = builder.basePath;
   this.queryParameters = builder.queryParameters;
   this.bodyParameters = builder.bodyParameters;
   this.headers = builder.headers;
@@ -23,6 +24,8 @@ Request.prototype.getHost = Request.prototype._getter('host');
 Request.prototype.getPort = Request.prototype._getter('port');
 
 Request.prototype.getScheme = Request.prototype._getter('scheme');
+
+Request.prototype.getBasePath = Request.prototype._getter('basePath');
 
 Request.prototype.getPath = Request.prototype._getter('path');
 
@@ -40,6 +43,9 @@ Request.prototype.getURI = function() {
   if (this.scheme === 'http' && this.port !== 80 ||
     this.scheme === 'https' && this.port !== 443) {
     uri += ':' + this.port;
+  }
+  if (this.basePath) {
+    uri += this.basePath;
   }
   if (this.path) {
     uri += this.path;
@@ -100,6 +106,8 @@ Builder.prototype.withHost = Builder.prototype._setter('host');
 Builder.prototype.withPort = Builder.prototype._setter('port');
 
 Builder.prototype.withScheme = Builder.prototype._setter('scheme');
+
+Builder.prototype.withBasePath = Builder.prototype._setter('basePath');
 
 Builder.prototype.withPath = Builder.prototype._setter('path');
 
